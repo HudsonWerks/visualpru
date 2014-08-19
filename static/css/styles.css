@@ -50,6 +50,15 @@ h1{
   color: #3d4351;
 }
 
+#status-view{
+  margin-top: 1em;
+}
+
+#status-view .alert-box{
+  text-align:center;
+  font-size: 16px;
+}
+
 #editor-view textarea,#editor-view .line-nums{
   line-height: 25px;
   font-size: 16px;

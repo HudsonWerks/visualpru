@@ -40,6 +40,7 @@ app.VisualPRUApplication = Backbone.View.extend({
     //Initialize the Application
     _.extend(this, this.defaults, options);
     this.headerView = new app.HeaderView();
+    this.statusView = new app.StatusView();
     this.pruView = new app.PRUView();
 
     //Keep track of the PRUs
@@ -51,7 +52,7 @@ app.VisualPRUApplication = Backbone.View.extend({
     var that = this;
     this.ws.onopen = function() {
       //Send a socket connection request to the backend
-      message = {action:'connect'};
+      var message = {action:'connect'};
       that.ws.send(JSON.stringify(message));
 
     };
@@ -69,7 +70,7 @@ app.VisualPRUApplication = Backbone.View.extend({
             that.prus[pruID] = new app.PRU(pruState);
           });
 
-          app.EventBus.trigger('application:connection:established');
+          app.EventBus.trigger('application:connection:opened');
 
           //Load the first PRU workspace(sorted by ID) by default
           that.setActivePRU(_.sortBy(_.keys(that.prus))[0]);
@@ -82,7 +83,7 @@ app.VisualPRUApplication = Backbone.View.extend({
     };
     this.ws.onclose = function() {
       console.log('WebSocket Connection Closed');
-      app.EventBus.trigger('application:connection:error');
+      app.EventBus.trigger('application:connection:closed');
     };
 
     //Listen for communication requests from the application
@@ -169,7 +170,7 @@ app.HeaderView = Backbone.View.extend({
 
   onWorkspaceClick: function(e){
     e.preventDefault();
-    var pruID = $(e.currentTarget).attr('href');
+    var pruID = $(e.currentTarget).data('pruid');
     app.EventBus.trigger('header:pru:change',pruID);
   },
 
@@ -180,12 +181,12 @@ app.HeaderView = Backbone.View.extend({
 
   onPRUChange: function(message){
     //Extract the required information from the message.
-    pruIDs = _.sortBy(_.keys(message.prus));
+    var pruIDs = _.sortBy(_.keys(message.prus));
 
     //There could be the case where there are no active prus
     var activePRUID = null;
     if(message.activePRU != null){
-      activePRUID = message.activePRU.get('id');
+      var activePRUID = message.activePRU.get('id');
     }
     this.render(pruIDs, activePRUID);
   }
@@ -202,8 +203,8 @@ app.PRUView = Backbone.View.extend({
     this.compilerView = new app.CompilerView({el:this.$el.find('#compiler-view')});
     this.memoryView = new app.MemoryView({el:this.$el.find('#memory-view')});
 
-    this.listenTo(app.EventBus, 'application:connection:established', this.show);
-    this.listenTo(app.EventBus, 'application:connection:failed', this.hide);
+    this.listenTo(app.EventBus, 'application:connection:opened', this.show);
+    this.listenTo(app.EventBus, 'application:connection:closed', this.hide);
 
     this.hide();
   },
@@ -220,30 +221,34 @@ app.PRUView = Backbone.View.extend({
 
 });
 
-/*app.StatusView = Backbone.View.extend({
+app.StatusView = Backbone.View.extend({
   el:'#status-view',
   initialize: function(options){
     _.extend(this, this.defaults, options);
-    //Render the PRU workspace. Note that we have to render the container view before we can instantiate the subviews
+
+    this.isConnected = false;
+
+
     this.render();
 
-    this.listenTo(app.EventBus, 'application:connection:established', this.onConnectionEstablished);
-    this.listenTo(app.EventBus, 'application:connection:failed', this.onConnectionFailed);
+    this.listenTo(app.EventBus, 'application:connection:opened', this.onConnectionOpened);
+    this.listenTo(app.EventBus, 'application:connection:closed', this.onConnectionClosed);
 
-    this.notifications = [];
   },
-  onConnectionEstablished: function(){
-    this.$el.show();
+  onConnectionOpened: function(){
+    this.isConnected = true;
+    this.render();
   },
-  onConnectionFailed: function(){
-    this.$el.hide();
+  onConnectionClosed: function(){
+    this.isConnected = false;
+    this.render();
   },
   render: function(){
-    this.$el.html(_.template($("#status-view-template").html()));
+    this.$el.html(_.template($("#status-view-template").html(),{isConnected: this.isConnected}));
     return this;
   }
 
-});*/
+});
 
 app.EditorView = Backbone.View.extend({
   initialize: function(options){
@@ -296,7 +301,6 @@ app.EditorView = Backbone.View.extend({
     this.$el.html(_.template($('#editor-view-template').html(), {sourceFiles: this.sourceFiles, activeSourceFile: this.activeSourceFile, pruStatus: this.pruStatus}));
 
     //Prettify the editor if it rendered to the screen
-    //if(this.$el.find('textarea').length != 0){
     if(this.sourceFiles.length>0){
       this.prettifyText();
     }
@@ -515,7 +519,7 @@ app.MemoryView = Backbone.View.extend({
     if(message.activePRU!=null){
       this.memory = message.activePRU.get('memory');
     }
-    this.render(); // For now, we only will support the first file
+    this.render();
   },
   events: {
     'click a.compile' : 'compile'

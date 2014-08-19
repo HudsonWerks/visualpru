@@ -25,19 +25,32 @@
           <li class="divider"></li>
           <li class="text"><a href='#'>PRU Select:</a></li>
           <% _.each(links,function(link){%>
-            <li class="workspace <%=link == activeLink ? 'active': ''%>"><a href="<%=link%>"><%=link.toUpperCase()%></a></li>
+            <li class="workspace <%=link == activeLink ? 'active': ''%>"><a href="#" data-pruid="<%=link%>"><%=link.toUpperCase()%></a></li>
           <% }) %>
         </ul>
       </section>
     </script>
 
     <script type="text/template" id="status-view-template">
-      <div class="row full-width" style="margin-top:1em;">
-        <div data-alert class="alert-box alert round">
-          This is an alert - alert that is rounded.
-          <a href="#" class="close">&times;</a>
+      <%if(isConnected){%>
+      <div class="row full-width">
+        <div class="large-8 medium-8 large-centered medium-centered columns">
+          <div data-alert class="alert-box success radius">
+            Connected to the BeagleBone Black! You can now start building and debugging PRU Applications.
+            <a href="#" class="close">&times;</a>
+          </div>
         </div>
       </div>
+      <%}else{%>
+      <div class="row full-width">
+        <div class="large-8 medium-8 large-centered medium-centered columns">
+          <div data-alert class="alert-box alert radius">
+            Not connected to the BeagleBone Black... Make sure the app is running on the board and reload the page.
+            <a href="#" class="close">&times;</a>
+          </div>
+        </div>
+      </div>
+      <%}%>
     </script>
 
     <script type="text/template" id="pru-view-template">
@@ -270,17 +283,9 @@
 
     </nav>
 
-    <div id="status" style="display:none;">
-      <div class="row" style="margin-top:1em;">
-        <div data-alert class="alert-box alert">
-          Alert
-          <a href="#" class="close">&times;</a>
-        </div>
-      </div>
-    </div>
-
     <div id="content">
-        <div id="pru-view"></div>
+      <div id="status-view"></div>
+      <div id="pru-view"></div>
     </div>
 
     <script src="static/js/vendor/jquery.js"></script>
