@@ -163,8 +163,8 @@ app.HeaderView = Backbone.View.extend({
     'click li.workspace a' : 'onWorkspaceClick',
     'click li.text a' : 'doNothing'
   },
-  render: function(links, activeLink){
-    this.$el.html(_.template($("#header-view-template").html(),{links: links, activeLink: activeLink}));
+  render: function(){
+    this.$el.html(_.template($("#header-view-template").html(),{prus: this.prus, activePRUID: this.activePRUID}));
     return this;
   },
 
@@ -183,12 +183,19 @@ app.HeaderView = Backbone.View.extend({
     //Extract the required information from the message.
     var pruIDs = _.sortBy(_.keys(message.prus));
 
-    //There could be the case where there are no active prus
-    var activePRUID = null;
+    //Create a pru object with "id" and "state" attributes
+    this.prus = [];
+    _.each(_.sortBy(_.keys(message.prus)), function(pru){
+      this.prus.push({id:pru, status:message.prus[pru].get('state').status});
+    },this);
+
+    //Store the id of the selected PRU
     if(message.activePRU != null){
-      var activePRUID = message.activePRU.get('id');
+      this.activePRUID = message.activePRU.get('id');
+    }else{
+      this.activePRUID = null;
     }
-    this.render(pruIDs, activePRUID);
+    this.render();
   }
 });
 

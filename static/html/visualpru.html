@@ -24,8 +24,8 @@
         <ul class="right">
           <li class="divider"></li>
           <li class="text"><a href='#'>PRU Select:</a></li>
-          <% _.each(links,function(link){%>
-            <li class="workspace <%=link == activeLink ? 'active': ''%>"><a href="#" data-pruid="<%=link%>"><%=link.toUpperCase()%></a></li>
+          <% _.each(prus,function(pru){%>
+            <li class="workspace <%=pru.id == activePRUID ? 'active': ''%>"><a href="#" data-pruid="<%=pru.id%>"><%=pru.id.toUpperCase()%></a><div><span class="label <%= pru.status == 'running' ? 'success' : 'alert'%>"><%=pru.status%></span><div></li>
           <% }) %>
         </ul>
       </section>
@@ -33,6 +33,14 @@
 
     <script type="text/template" id="status-view-template">
       <%if(isConnected){%>
+      <div class="pru-status" class="row full-width" style="display:none;">
+        <div class="large-2 medium-2 large-offset-10 columns">
+          <ul class="no-bullet">
+            <li>PRU0: <span class="label success">Running</span></li>
+            <li>PRU1:<span class="label alert">Halted</span></li>
+          </ul>
+        </div>
+      </div>
       <div class="row full-width">
         <div class="large-8 medium-8 large-centered medium-centered columns">
           <div data-alert class="alert-box success radius">
@@ -279,7 +287,7 @@
   </head>
   <body>
 
-    <nav class="top-bar" data-topbar>
+    <nav id="header-view" class="top-bar" data-topbar>
 
     </nav>
 

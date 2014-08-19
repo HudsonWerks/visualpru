@@ -59,6 +59,21 @@ h1{
   font-size: 16px;
 }
 
+#header-view li.workspace{
+  text-align:center;
+}
+
+/*wrapping the label in a div is hacky, but it works so well! TODO: Figure out a better way later.*/
+#header-view .workspace div{
+  margin-top:-6px;
+}
+
+#header-view .workspace .label{
+  font-size:10px;
+  margin: 0;
+  width:100%;
+}
+
 #editor-view textarea,#editor-view .line-nums{
   line-height: 25px;
   font-size: 16px;
