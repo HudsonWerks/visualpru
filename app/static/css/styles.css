@@ -1,0 +1,235 @@
+body{
+  background: #eee;
+}
+
+.top-bar{
+}
+
+.top-bar .name h1{
+  font-size: 1.5rem;
+}
+
+.top-bar .text a{
+  font-size: 1.0rem !important;
+}
+
+.top-bar .text a:hover{
+  background-color: #333;
+}
+
+.top-bar ul.right li a{
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.full-width{
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: initial;
+}
+
+.icon-bar a.item{
+  padding: 0.5rem;
+}
+
+.icon-bar a.item i{
+  font-size: 1.0rem;
+}
+
+.icon-bar a.item label{
+  font-size: 0.75rem;
+}
+
+.panel{
+  background: #fafafa;
+  border-color: #dcdcdc;
+}
+
+h1{
+  color: #3d4351;
+}
+
+#status-view{
+  margin-top: 1em;
+}
+
+#status-view .alert-box{
+  text-align:center;
+  font-size: 16px;
+}
+
+#header-view li.workspace{
+  text-align:center;
+}
+
+/*wrapping the label in a div is hacky, but it works so well! TODO: Figure out a better way later.*/
+#header-view .workspace div{
+  margin-top:-6px;
+}
+
+#header-view .workspace .label{
+  font-size:10px;
+  margin: 0;
+  width:100%;
+}
+
+#editor-view textarea,#editor-view .line-nums{
+  line-height: 25px;
+  font-size: 16px;
+  font-family: monospace;
+
+}
+
+#editor-view textarea{
+  border:1px solid #999;
+  /*border-left: none;*/
+  padding:10px;
+  margin:0;
+}
+
+#editor-view .line-nums{
+  padding:10px 4px;
+  background: #eee;
+  color: #777;
+  text-align:right;
+  /*border-left: 1px solid #999;*/
+}
+
+#editor-view .tab-title a{
+  overflow:hidden;
+  text-align:center;
+  color:white;
+  background-color: #333 !important;
+  word-break: break-all;
+}
+
+#editor-view .tab-title a:hover{
+  background-color: #0078a0 !important;
+}
+
+#editor-view .tab-title.active a{
+  color:white;
+  background-color: #008cba !important;
+}
+
+#compiler-view .code.error{
+  border: 2px solid #f04124;
+}
+
+#compiler-view .code.success{
+  border: 2px solid #43ac6a;
+}
+
+
+#compiler-view .code{
+  width: 100%;
+  padding:0;
+  margin:0;
+  border-collapse: collapse;
+  background-color:#fff;
+  border:2px solid #999;
+  table-layout:fixed;
+}
+
+#compiler-view .code code{
+  padding:0;
+  border:none;
+  background-color: white;
+}
+
+#compiler-view .code td{
+  padding:0;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+#compiler-view .code .empty{
+  padding:6px;
+}
+
+#compiler-view .code .line-nums{
+  width: 50px;
+  color: #777;
+  background: #eee;
+  text-align:right;
+  font-size:16px;
+}
+
+#compiler-view .code .lines{
+  background-color:#fff;
+  font-size:16px;
+}
+
+#compiler-view .code .line{
+  padding:6px 10px !important;
+}
+
+#compiler-view .code .line-num{
+  padding:6px 10px !important;
+}
+
+#compiler-view .code .line-num.current, .code .line.current{
+  background-color: yellow;
+}
+
+[contenteditable]:focus { outline: 0px solid transparent; }
+
+.register-name{
+  font-size: 1.3em;
+}
+
+.register-value{
+  font-size: 1.3em;
+  letter-spacing: 2px
+}
+
+#memory-view select{
+  margin: 0 0 0.5em 0;
+}
+
+#memory-view table{
+  width: 100%;
+  font-family: monospace;
+}
+
+#memory-view .table-wrapper{
+  /**NOTE: Setting a height enables table scrolling**/
+  /*height:700px;*/
+  overflow:auto;
+}
+/*
+#memory-view table tbody, table thead{
+  display: block;
+  width: 100%;
+}
+
+#memory-view table tbody{
+  overflow: auto;
+  height: 600px;
+}*/
+
+.reveal-modal{
+  padding:0;
+}
+
+.reveal-modal h3{
+  text-align:center;
+  color: white;
+  background: #333;
+  margin-bottom: 1em;
+}
+.reveal-modal h3 a.close-reveal-modal{
+  color: white;
+  font-size: 1.5rem;
+}
+.reveal-modal em{
+  text-decoration: underline;
+  font-style: normal;
+}
+
+.reveal-modal span.code-snippet{
+  font-family: monospace;
+  background: #eee;
+  padding:3px;
+}
