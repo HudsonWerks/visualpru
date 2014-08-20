@@ -2,5 +2,12 @@
 __pycache__/
 *.py[cod]
 
+#Distribution files
+*.egg-info
+dist/
+
 #Program-generated directories
 programs/
+
+#Setup: Don't need setup.py to install any packages... just run the main script
+setup.py
