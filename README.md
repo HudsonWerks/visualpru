@@ -7,10 +7,10 @@ The hardware is accessed by twiddling bits in memory-mapped /dev/mem . Assembly 
 
 Installation
 ----
+Install python if necessary, then:
 
 ```sh
 pip install bottle
-pip install gevent
 pip install gevent-websocket
 
 cd /home
