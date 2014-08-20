@@ -16,7 +16,7 @@ pip install gevent-websocket
 cd /home
 git clone https://github.com/mmcdan/visualpru.git
 ```
-Finally, run *linuxbuild* script in [pasm] and put the resulting executable in /usr/local/bin (or another system-wide binary location)
+Finally, download [pasm], run the *linuxbuild* script, and put the resulting executable in /usr/local/bin (or another system-wide binary location)
 
 Running
 ----
@@ -24,6 +24,7 @@ Just go into the VisualPRU directory and type **python visualpru.py**, then navi
 
 TODO
 ----
+* Transition from /dev/mem to UIO
 * Add the ability to load existing source files
 * Highlight errors in the editor view
 * Allow the user to modify memory registers
