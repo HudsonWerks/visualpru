@@ -460,7 +460,6 @@ app.CompilerView = Backbone.View.extend({
   onPRUChange: function(message){
     //Extract the required information from the message.
     if(message.activePRU!=null){
-      //console.log(message.activePRU);
       this.errors = message.activePRU.get('program').errors;
       this.warnings = message.activePRU.get('program').warnings;
       this.compiledFile = message.activePRU.get('program').compiledFile;

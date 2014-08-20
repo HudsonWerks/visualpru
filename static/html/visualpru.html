@@ -190,7 +190,6 @@
             </a>
             <%}%>
         </div>
-        <div class="display">
           <% if(status=='empty'){ %>
             <table class="code">
               <tbody>
@@ -204,14 +203,14 @@
               </tbody>
             </table>
           <%}else if(status=='error'){%>
-            <table class="code">
+            <table class="code error">
               <tbody>
                 <tr>
                   <td class="lines">
                     <code>
                     <%_.each(lines,function(line,i){%>
                       <div class="line">
-                        <pre><%=line.text%></pre>
+                        <%=line.filename%>[<%=line.lineno%>]: "<%=line.text%>"
                       </div>
                     <%});%>
                     </code>
@@ -220,7 +219,7 @@
               </tbody>
             </table>
           <%}else if(status=='success'){%>
-            <table class="code">
+            <table class="code success">
               <tbody>
                 <tr>
                   <td class="line-nums">
@@ -243,7 +242,6 @@
               </tbody>
             </table>
           <%}%>
-        </div>
     </script>
 
     <script type="text/template" id="memory-view-template">
